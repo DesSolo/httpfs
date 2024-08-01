@@ -1,6 +1,8 @@
 # httpfs
 Простое файловое хранилище поверх http
 
+Актуальный пример файла конфигурации можно увидеть [config.yml](examples/config.yml)
+
 ## Usage
 ``` bash
 # upload
