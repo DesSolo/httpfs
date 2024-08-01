@@ -32,7 +32,7 @@ func HandleDownload(d Downloader) http.HandlerFunc {
 
 		ctx := logger.LogWithKvContext(r.Context(), "hash", has)
 
-		if err := d.Download(r.Context(), entities.Hash(has), w); err != nil {
+		if err := d.Download(ctx, entities.Hash(has), w); err != nil {
 
 			if errors.Is(err, storage.ErrNotFound) {
 				w.WriteHeader(http.StatusNotFound)
