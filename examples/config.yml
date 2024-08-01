@@ -1,0 +1,56 @@
+# listen address and port
+address: :8080
+
+# logging settings block
+logging:
+  # logging handler
+  #  text - logging as text
+  #  json - logging as json
+  handler: text
+  # advanced logging options
+  options:
+    # add source stack (default false)
+    add_source: false
+    # logging level (default 0)
+    #   Debug = -4
+    #   Info = 0
+    #   Warn = 4
+    #   Error = 8
+    level: -4
+
+# storage settings block
+storage:
+  # kind of storage
+  #  file - file storage
+  kind: file
+  # file storage settings
+  file:
+    # path for persistent storage
+    base_path: /tmp/httpfs
+    # path for temporary storage
+    temporary_path: /tmp
+
+# callback settings block
+callback:
+  # kind of callback
+  #   pre:
+  #     file_size - check file size (min, max)
+  #   post:
+  #     exec - execute command. Environment variables: $HASH - hash of uploaded file
+  #
+  # pre upload callbacks
+  pre:
+    - kind: file_size
+      file_size:
+        min: 0
+        max: 1e+7 # 10 MB
+        
+  # post upload callbacks
+  post:
+    - kind: exec
+      exec:
+        command: sh
+        args:
+          - -c
+          - |
+            echo "$(date) new file uploaded success hash $HASH" >> /tmp/log.log
